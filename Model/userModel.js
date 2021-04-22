@@ -7,42 +7,15 @@ mongoose
     console.log("Connected to user db !!!");
   });
 
-const noteSchema = new mongoose.Schema({
-  noteName: {
-    type: String,
-    default: "New Note",
-  },
-  noteContent: {
-    type: String,
-  },
-  createdOn: {
-    type: Date,
-    default: Date.now(),
-  },
-});
-
-const classSchema = new mongoose.Schema({
-  classname: {
-    type: String,
-    default: "New Class",
-  },
-  classNotes: [noteSchema],
-});
-
 let userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
   },
-  email: {
+  userId:{
     type: String,
     required: true,
-    unique: true,
-  },
-  password: {
-    type: String,
-    minlength: [6, "Password must be greater than 6 characters"],
-    required: true,
+    unique: true
   },
   classes: {
     type: [String],

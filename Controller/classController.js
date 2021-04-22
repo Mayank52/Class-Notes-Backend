@@ -1,18 +1,25 @@
+// const userModel = require("../Model/userModel");
 const classNotesModel = require("../Model/classNotesModel");
 
 //Done
 let createClass = async (req, res) => {
   try {
-    const { classname } = req.body;
+    const { classname, userid } = req.body;
 
     const classObj = {
       classname: classname,
       classnotes: [],
     };
 
+    //create class
     const newClass = await classNotesModel.create(classObj);
 
     console.log(newClass);
+
+    //add class id to user object
+    // const userObj = await userModel.findById(userid);
+    // userObj.classes.push(newClass._id);
+    // await userObj.save();
 
     res.status(200).json({
       message: "Created class successfully",
@@ -26,6 +33,21 @@ let createClass = async (req, res) => {
   }
 };
 
+let getAllClasses = async (req, res) => {
+  try {
+    let allClasses = await classNotesModel.find({});
+
+    res.status(200).json({
+      message: "Got all classes successfully",
+      data: allClasses,
+    });
+  } catch (error) {
+    res.status(501).json({
+      message: "Failed to get all notes",
+      error,
+    });
+  }
+};
 //Done
 let getAllClassNotes = async (req, res) => {
   try {
@@ -98,6 +120,7 @@ let renameClassById = async (req, res) => {
 };
 
 module.exports.createClass = createClass;
+module.exports.getAllClasses = getAllClasses;
 module.exports.getAllClassNotes = getAllClassNotes;
 module.exports.deleteClassById = deleteClassById;
 module.exports.renameClassById = renameClassById;

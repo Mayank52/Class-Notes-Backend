@@ -1,5 +1,11 @@
-const express= require('express');
-const {createClass, getAllClassNotes, deleteClassById, renameClassById} = require('../Controller/classController')
+const express = require("express");
+const {
+  createClass,
+  getAllClasses,
+  getAllClassNotes,
+  deleteClassById,
+  renameClassById,
+} = require("../Controller/classController");
 
 const classRouter = express.Router();
 
@@ -8,7 +14,11 @@ const classRouter = express.Router();
 //delete class
 //rename class
 
-classRouter.route("").post(createClass);
-classRouter.route("/:classid").get(getAllClassNotes).delete(deleteClassById).patch(renameClassById);
+classRouter.route("").post(createClass).get(getAllClasses);
+classRouter
+  .route("/:classid")
+  .get(getAllClassNotes)
+  .delete(deleteClassById)
+  .patch(renameClassById);
 
-module.exports  = classRouter;
+module.exports = classRouter;
