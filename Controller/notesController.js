@@ -1,6 +1,5 @@
 const classNotesModel = require("../Model/classNotesModel");
 
-//Done
 const createNote = async (req, res) => {
   try {
     const classId = req.params.classid;
@@ -29,7 +28,6 @@ const createNote = async (req, res) => {
   }
 };
 
-//Done
 const deleteNoteById = async (req, res) => {
   try {
     const classId = req.params.classid;
@@ -58,7 +56,6 @@ const deleteNoteById = async (req, res) => {
   }
 };
 
-//Done
 const updateNoteById = async (req, res) => {
   try {
     const classId = req.params.classid;

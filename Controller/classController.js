@@ -1,7 +1,6 @@
 // const userModel = require("../Model/userModel");
 const classNotesModel = require("../Model/classNotesModel");
 
-//Done
 let createClass = async (req, res) => {
   try {
     const { classname, userid } = req.body;
@@ -48,7 +47,7 @@ let getAllClasses = async (req, res) => {
     });
   }
 };
-//Done
+
 let getAllClassNotes = async (req, res) => {
   try {
     const classId = req.params.classid;
@@ -70,7 +69,6 @@ let getAllClassNotes = async (req, res) => {
   }
 };
 
-//Done
 let deleteClassById = async (req, res) => {
   try {
     const classId = req.params.classid;
@@ -91,7 +89,6 @@ let deleteClassById = async (req, res) => {
   }
 };
 
-//Done
 let renameClassById = async (req, res) => {
   try {
     const classId = req.params.classid;
