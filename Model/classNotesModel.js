@@ -13,7 +13,7 @@ const noteSchema = new mongoose.Schema({
     default: "New Note",
   },
   notecontent: {
-    type: String,
+    type: Object,
   },
   createdon: {
     type: Date,
