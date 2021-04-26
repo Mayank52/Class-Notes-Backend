@@ -8,18 +8,13 @@ const classRouter = require("./Router/classRouter");
 app.use(express.json());
 app.use(cors());
 
+app.get('/', (req, res)=>{
+  res.send("<h1> Welcome to Class Notes backend </h1>")
+})
+
 app.use("/api/class", classRouter);
 app.use("/api/notes", notesRouter);
 // app.use("/api/user", userRouter);
-
-// app.get("auth/google", (req, res) => {
-//   console.log("user logged in ");
-// });
-
-// // http://localhost:4000/auth/callback
-// app.get("auth/callback", (req, res) => {
-//   console.log("user received");
-// });
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
