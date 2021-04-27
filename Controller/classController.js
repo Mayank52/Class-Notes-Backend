@@ -1,9 +1,10 @@
-// const userModel = require("../Model/userModel");
+const userModel = require("../Model/userModel");
 const classNotesModel = require("../Model/classNotesModel");
 
 let createClass = async (req, res) => {
   try {
-    const { classname, userid } = req.body;
+    const userid = req.params.userid;
+    const { classname } = req.body;
 
     const classObj = {
       classname: classname,
@@ -11,18 +12,18 @@ let createClass = async (req, res) => {
     };
 
     //create class
-    const newClass = await classNotesModel.create(classObj);
+    const newClassObj = await classNotesModel.create(classObj);
 
-    console.log(newClass);
+    console.log(newClassObj);
 
     //add class id to user object
-    // const userObj = await userModel.findById(userid);
-    // userObj.classes.push(newClass._id);
-    // await userObj.save();
+    const userObj = await userModel.findById(userid);
+    userObj.classes.push(newClassObj._id);
+    await userObj.save();
 
     res.status(200).json({
       message: "Created class successfully",
-      data: newClass,
+      data: newClassObj,
     });
   } catch (error) {
     res.status(500).json({
@@ -32,13 +33,21 @@ let createClass = async (req, res) => {
   }
 };
 
+//By user id
 let getAllClasses = async (req, res) => {
   try {
-    let allClasses = await classNotesModel.find({});
+    const userid = req.params.userid;
+
+    const userObj = await userModel.findById(userid);
+    let classes = [];
+    userObj.classes.forEach(async (classId) => {
+      let classObj = await classNotesModel.findById(classId);
+      classes.push(classObj);
+    });
 
     res.status(200).json({
       message: "Got all classes successfully",
-      data: allClasses,
+      data: classes,
     });
   } catch (error) {
     res.status(501).json({
@@ -48,6 +57,7 @@ let getAllClasses = async (req, res) => {
   }
 };
 
+//Done
 let getAllClassNotes = async (req, res) => {
   try {
     const classId = req.params.classid;
@@ -72,10 +82,19 @@ let getAllClassNotes = async (req, res) => {
 let deleteClassById = async (req, res) => {
   try {
     const classId = req.params.classid;
+    const userId = req.params.userid;
 
     const deletedClass = await classNotesModel.findByIdAndDelete(classId);
 
     console.log(deletedClass);
+
+    //remove from user's classes array
+    const userObj = await userModel.findById(userid);
+    let userClasses = userObj.classes.filter(
+      (userclassId) => userclassId != classId
+    );
+    userObj.classes = userClasses;
+    await userObj.save();
 
     res.status(200).json({
       message: "Deleted Class successfully",
@@ -89,6 +108,7 @@ let deleteClassById = async (req, res) => {
   }
 };
 
+//Done
 let renameClassById = async (req, res) => {
   try {
     const classId = req.params.classid;

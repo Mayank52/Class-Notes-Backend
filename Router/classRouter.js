@@ -14,11 +14,14 @@ const classRouter = express.Router();
 //delete class
 //rename class
 
-classRouter.route("").post(createClass).get(getAllClasses);
+//added userid
+classRouter.route("/:userid").post(createClass).get(getAllClasses);
+
 classRouter
   .route("/:classid")
   .get(getAllClassNotes)
-  .delete(deleteClassById)
   .patch(renameClassById);
+
+classRouter.route('/:userid/:classid').delete(deleteClassById)
 
 module.exports = classRouter;
