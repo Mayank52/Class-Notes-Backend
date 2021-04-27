@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const {DB_LINK} = require("../config/secrets");
+const { DB_LINK } = require("../config/secrets");
 
 // const DB_LINK = process.env.DB_LINK;
 
@@ -14,18 +14,18 @@ let userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  email:{
-    type: String,
-    required: true
-  },
-  uid:{
+  email: {
     type: String,
     required: true,
-    unique: true
+  },
+  uid: {
+    type: String,
+    required: true,
+    unique: true,
   },
   classes: {
     type: [String],
-    default: []
+    default: [],
   },
 });
 

@@ -1,30 +1,28 @@
 const userModel = require("../Model/userModel");
-const classNotesModel = require("../Model/classNotesModel");
 
-// const getUserData = async (req, res)=>{
-//     try{
-//         const userId = req.params.id;
+const getUserData = async (req, res) => {
+  try {
+    const userId = req.params.userid;
 
-//         let userObj = await userModel.findById(userId);
-//         let userClassIds= userObj.classes;
-
-//         let classesArr = [];
-//         userClassIds.forEach(classId=>{
-//             const classObj = await classNotesModel.findById(classId);
-//             classesArr.push(classObj);
-//         })
-
-//         res.status(200).json({
-//             message:"Got all user data successfully",
-//             data: classesArr
-//         })
-//     }
-//     catch(error){
-//         res.status(500).json({
-//             message:"Failed to get data"
-//         })
-//     }
-// }
+    let userObj = await userModel.find({ uid: userId });
+    if (userObj[0]) {
+      res.status(200).json({
+        message: "User signed In",
+        data: userObj[0],
+      });
+    }
+    else{
+      res.status(200).json({
+        message: "User does not exist",
+        data: null,
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to get data",
+    });
+  }
+};
 
 const createUser = async (req, res) => {
   try {
@@ -33,11 +31,13 @@ const createUser = async (req, res) => {
     const user = {
       name,
       email,
-      uid
+      uid,
     };
 
-    let presentUser = await userModel.find({uid});
-    console.log(presentUser)
+    console.log(user);
+
+    let presentUser = await userModel.find({ uid });
+    console.log("Present User: ", presentUser);
 
     if (presentUser[0]) {
       res.status(200).json({
@@ -62,3 +62,4 @@ const createUser = async (req, res) => {
 };
 
 module.exports.createUser = createUser;
+module.exports.getUserData = getUserData;
